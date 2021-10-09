@@ -8,7 +8,6 @@ import (
 	"bufio"
 	"compress/bzip2"
 	"fmt"
-	"internal/testenv"
 	"io"
 	"os"
 	"path/filepath"
@@ -660,7 +659,7 @@ func makeText(n int) []byte {
 }
 
 func BenchmarkMatch(b *testing.B) {
-	isRaceBuilder := strings.HasSuffix(testenv.Builder(), "-race")
+	isRaceBuilder := strings.HasSuffix(builder(), "-race")
 
 	for _, data := range benchData {
 		r := MustCompile(data.re)
@@ -682,7 +681,7 @@ func BenchmarkMatch(b *testing.B) {
 }
 
 func BenchmarkMatch_onepass_regex(b *testing.B) {
-	isRaceBuilder := strings.HasSuffix(testenv.Builder(), "-race")
+	isRaceBuilder := strings.HasSuffix(builder(), "-race")
 	r := MustCompile(`(?s)\A.*\z`)
 	if r.onepass == nil {
 		b.Fatalf("want onepass regex, but %q is not onepass", r)
@@ -702,6 +701,10 @@ func BenchmarkMatch_onepass_regex(b *testing.B) {
 			}
 		})
 	}
+}
+
+func builder() string {
+	return os.Getenv("GO_BUILDER_NAME")
 }
 
 var benchData = []struct{ name, re string }{
