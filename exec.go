@@ -409,7 +409,7 @@ func (re *Regexp) doOnePass(ir io.RuneReader, ib []byte, is string, pos, ncap in
 	width, width1 := 0, 0
 	var flag lazyFlag
 	var pc int
-	var inst onePassInst
+	var inst *onePassInst
 
 	// If there is a simple literal prefix, skip over it.
 	if pos == 0 && len(re.prefix) > 0 && i.canCheckPrefix() {
@@ -442,7 +442,7 @@ func (re *Regexp) doOnePass(ir io.RuneReader, ib []byte, is string, pos, ncap in
 		r1, width1 = i.step(pos + width)
 	}
 	for {
-		inst = re.onepass.Inst[pc]
+		inst = &re.onepass.Inst[pc]
 		pc = int(inst.Out)
 		switch inst.Op {
 		default:
@@ -470,7 +470,7 @@ func (re *Regexp) doOnePass(ir io.RuneReader, ib []byte, is string, pos, ncap in
 			}
 		// peek at the input rune to see which branch of the Alt to take
 		case syntax.InstAlt, syntax.InstAltMatch:
-			pc = int(onePassNext(&inst, r))
+			pc = int(onePassNext(inst, r))
 			continue
 		case syntax.InstFail:
 			goto Return
