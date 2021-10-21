@@ -6,10 +6,11 @@ package regexp
 
 import (
 	"reflect"
-	"regexp/syntax"
 	"strings"
 	"testing"
 	"unicode/utf8"
+
+	"github.com/grafana/regexp/syntax"
 )
 
 var goodRe = []string{
