@@ -6,8 +6,9 @@ package regexp
 
 import (
 	"io"
-	"regexp/syntax"
 	"sync"
+
+	"github.com/grafana/regexp/syntax"
 )
 
 // A queue is a 'sparse array' holding pending threads of execution.
