@@ -15,8 +15,9 @@
 package regexp
 
 import (
-	"regexp/syntax"
 	"sync"
+
+	"github.com/grafana/regexp/syntax"
 )
 
 // A job is an entry on the backtracker's job stack. It holds
