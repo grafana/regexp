@@ -205,6 +205,8 @@ func (m *machine) match(i input, pos int) bool {
 				// Have match; finished exploring alternatives.
 				break
 			}
+			// Note we don't check foldCase here, because Unicode folding is complicated;
+			// just let it fall through to EqualFold on the whole string.
 			if len(m.re.prefix) > 0 && r1 != m.re.prefixRune && i.canCheckPrefix() {
 				// Match requires literal prefix; fast search for it.
 				advance := i.index(m.re, pos)
