@@ -5,10 +5,11 @@
 package regexp
 
 import (
-	"regexp/syntax"
 	"sort"
 	"strings"
 	"unicode"
+
+	"github.com/grafana/regexp/syntax"
 )
 
 // "One-pass" regexp execution.

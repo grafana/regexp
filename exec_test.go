@@ -11,11 +11,12 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"regexp/syntax"
 	"strconv"
 	"strings"
 	"testing"
 	"unicode/utf8"
+
+	"github.com/grafana/regexp/syntax"
 )
 
 // TestRE2 tests this package's regexp API against test cases

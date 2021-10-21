@@ -68,12 +68,13 @@ package regexp
 import (
 	"bytes"
 	"io"
-	"regexp/syntax"
 	"strconv"
 	"strings"
 	"sync"
 	"unicode"
 	"unicode/utf8"
+
+	"github.com/grafana/regexp/syntax"
 )
 
 // Regexp is the representation of a compiled regular expression.
