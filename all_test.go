@@ -819,6 +819,16 @@ func BenchmarkOnePassLongPrefix(b *testing.B) {
 	}
 }
 
+func BenchmarkOnePassLongPrefixFold(b *testing.B) {
+	b.StopTimer()
+	x := []byte("aBcDefghijklmnopqrstuvwxyz")
+	re := MustCompile("^(?i)abcdefghijklmnopqrstuvwxyz.*$")
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		re.Match(x)
+	}
+}
+
 func BenchmarkOnePassLongNotPrefix(b *testing.B) {
 	b.StopTimer()
 	x := []byte("abcdefghijklmnopqrstuvwxyz")
