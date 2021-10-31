@@ -200,7 +200,7 @@ func compile(expr string, mode syntax.Flags, longest bool) (*Regexp, error) {
 		regexp.prefix, regexp.prefixComplete, regexp.prefixFoldCase = prog.PrefixAndCase()
 		regexp.maxBitStateLen = maxBitStateLen(prog)
 	} else {
-		regexp.prefix, regexp.prefixComplete, regexp.prefixEnd = onePassPrefix(prog)
+		regexp.prefix, regexp.prefixComplete, regexp.prefixFoldCase, regexp.prefixEnd = onePassPrefix(prog)
 	}
 	if regexp.prefix != "" {
 		// TODO(rsc): Remove this allocation by adding
