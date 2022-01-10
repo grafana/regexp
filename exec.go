@@ -178,6 +178,12 @@ func (m *machine) match(i input, pos int) bool {
 	if startCond == ^syntax.EmptyOp(0) { // impossible
 		return false
 	}
+	// If we have an anchored prefix, check it matches before setting everything else up.
+	if startCond&syntax.EmptyBeginText != 0 && pos == 0 && i.canCheckPrefix() {
+		if !i.hasPrefix(m.re) {
+			return false
+		}
+	}
 	m.matched = false
 	for i := range m.matchcap {
 		m.matchcap[i] = -1
