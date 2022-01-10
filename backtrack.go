@@ -321,6 +321,12 @@ func (re *Regexp) backtrack(ib []byte, is string, pos int, ncap int, dstCap []in
 
 	// Anchored search must start at the beginning of the input
 	if startCond&syntax.EmptyBeginText != 0 {
+		if len(re.prefix) > 0 {
+			if !i.hasPrefix(re) {
+				freeBitState(b)
+				return nil
+			}
+		}
 		if len(b.cap) > 0 {
 			b.cap[0] = pos
 		}

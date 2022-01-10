@@ -145,7 +145,11 @@ func (i *Inst) op() InstOp {
 // regexp must start with. Complete is true if the prefix
 // is the entire match.
 func (p *Prog) Prefix() (prefix string, complete bool) {
-	i := p.skipNop(uint32(p.Start))
+	i := &p.Inst[p.Start]
+	// Skip any no-op, capturing or begin-text instructions
+	for i.Op == InstNop || i.Op == InstCapture || (i.Op == InstEmptyWidth && EmptyOp(i.Arg)&EmptyBeginText != 0) {
+		i = &p.Inst[i.Out]
+	}
 
 	// Avoid allocation of buffer if prefix is empty.
 	if i.op() != InstRune || len(i.Rune) != 1 {
