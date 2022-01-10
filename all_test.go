@@ -366,7 +366,7 @@ var literalPrefixTests = []MetaTest{
 	// See golang.org/issue/11175.
 	// output is unused.
 	{`^0^0$`, ``, `0`, false},
-	{`^0^`, ``, ``, false},
+	{`^0^`, ``, `0`, false},
 	{`^0$`, ``, `0`, true},
 	{`$0^`, ``, ``, false},
 	{`$0$`, ``, ``, false},

@@ -158,7 +158,11 @@ func (p *Prog) Prefix() (prefix string, complete bool) {
 // is the entire match. FoldCase is true if the string should
 // match in upper or lower case.
 func (p *Prog) PrefixAndCase() (prefix string, complete bool, foldCase bool) {
-	i := p.skipNop(uint32(p.Start))
+	i := &p.Inst[p.Start]
+	// Skip any no-op, capturing or begin-text instructions
+	for i.Op == InstNop || i.Op == InstCapture || (i.Op == InstEmptyWidth && EmptyOp(i.Arg)&EmptyBeginText != 0) {
+		i = &p.Inst[i.Out]
+	}
 
 	// Avoid allocation of buffer if prefix is empty.
 	if i.op() != InstRune || len(i.Rune) != 1 {
