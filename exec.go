@@ -178,12 +178,6 @@ func (m *machine) match(i input, pos int) bool {
 	if startCond == ^syntax.EmptyOp(0) { // impossible
 		return false
 	}
-	// If we have an anchored prefix, check it matches before setting everything else up.
-	if startCond&syntax.EmptyBeginText != 0 && pos == 0 && i.canCheckPrefix() {
-		if !i.hasPrefix(m.re) {
-			return false
-		}
-	}
 	m.matched = false
 	for i := range m.matchcap {
 		m.matchcap[i] = -1
@@ -536,6 +530,29 @@ func (re *Regexp) doExecute(r io.RuneReader, b []byte, s string, pos int, ncap i
 
 	if r == nil && len(b)+len(s) < re.minInputLen {
 		return nil
+	}
+
+	// Check prefix match before allocating data structures
+	if len(re.prefix) > 0 && r == nil {
+		if re.cond&syntax.EmptyBeginText != 0 { // anchored
+			if b != nil && !(&inputBytes{str: b[pos:]}).hasPrefix(re) {
+				return nil
+			}
+			if s != "" && !(&inputString{str: s[pos:]}).hasPrefix(re) {
+				return nil
+			}
+		} else { // non-anchored
+			var advance int
+			if b != nil {
+				advance = (&inputBytes{str: b}).index(re, pos)
+			} else {
+				advance = (&inputString{str: s}).index(re, pos)
+			}
+			if advance < 0 {
+				return nil
+			}
+			pos += advance
+		}
 	}
 
 	if re.onepass != nil {
