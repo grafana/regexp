@@ -321,12 +321,6 @@ func (re *Regexp) backtrack(ib []byte, is string, pos int, ncap int, dstCap []in
 
 	// Anchored search must start at the beginning of the input
 	if startCond&syntax.EmptyBeginText != 0 {
-		if len(re.prefix) > 0 {
-			if !i.hasPrefix(re) {
-				freeBitState(b)
-				return nil
-			}
-		}
 		if len(b.cap) > 0 {
 			b.cap[0] = pos
 		}
@@ -343,17 +337,7 @@ func (re *Regexp) backtrack(ib []byte, is string, pos int, ncap int, dstCap []in
 		// but we are not clearing visited between calls to TrySearch,
 		// so no work is duplicated and it ends up still being linear.
 		width := -1
-		for ; pos <= end && width != 0; pos += width {
-			if len(re.prefix) > 0 {
-				// Match requires literal prefix; fast search for it.
-				advance := i.index(re, pos)
-				if advance < 0 {
-					freeBitState(b)
-					return nil
-				}
-				pos += advance
-			}
-
+		for pos <= end && width != 0 {
 			if len(b.cap) > 0 {
 				b.cap[0] = pos
 			}
@@ -362,6 +346,17 @@ func (re *Regexp) backtrack(ib []byte, is string, pos int, ncap int, dstCap []in
 				goto Match
 			}
 			_, width = i.step(pos)
+			pos += width
+
+			if len(re.prefix) > 0 {
+				// Match requires literal prefix; fast search for next occurrence.
+				advance := i.index(re, pos)
+				if advance < 0 {
+					freeBitState(b)
+					return nil
+				}
+				pos += advance
+			}
 		}
 		freeBitState(b)
 		return nil
