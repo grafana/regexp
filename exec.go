@@ -430,6 +430,7 @@ func (re *Regexp) doOnePass(ir io.RuneReader, ib []byte, is string, pos, ncap in
 	} else {
 		m.matchcap = m.matchcap[:ncap]
 	}
+
 	for i := range m.matchcap {
 		m.matchcap[i] = -1
 	}
