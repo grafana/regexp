@@ -194,7 +194,7 @@ var parseTests = []parseTest{
 	{`abc|abd|aef|bcx|bcy`,
 		`alt{cat{lit{a}alt{cat{lit{b}cc{0x63-0x64}}str{ef}}}` +
 			`cat{str{bc}cc{0x78-0x79}}}`},
-	{`abc|x|abd`, `alt{str{abc}lit{x}str{abd}}`},
+	{`abc|x|abd`, `alt{cat{str{ab}cc{0x63-0x64}}lit{x}}`},
 	{`(?i)abc|ABD`, `cat{strfold{AB}cc{0x43-0x44 0x63-0x64}}`},
 	{`[ab]c|[ab]d`, `cat{cc{0x61-0x62}cc{0x63-0x64}}`},
 	{`.c|.d`, `cat{dot{}cc{0x63-0x64}}`},
