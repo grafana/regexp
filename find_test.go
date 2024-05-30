@@ -67,6 +67,14 @@ var findTests = []FindTest{
 	{`/$`, "/abc/", build(1, 4, 5)},
 	{`/$`, "/abc", nil},
 
+	// lists of alternates, with prefix in common
+	{`xx|aa|a`, "aa", build(1, 0, 2)},
+	{`xx|aa|(?i:a)`, "aa", build(1, 0, 2)},
+	{`xx|a|aa`, "aa", build(2, 0, 1, 1, 2)},
+	{`xx|(?i:a)|aa`, "aa", build(2, 0, 1, 1, 2)},
+	{`xx|a|(?i:aa)`, "aa", build(2, 0, 1, 1, 2)},
+	{`xx|(?i:a)|(?i:aa)`, "aa", build(2, 0, 1, 1, 2)},
+
 	// multiple matches
 	{`.`, "abc", build(3, 0, 1, 1, 2, 2, 3)},
 	{`(.)`, "abc", build(3, 0, 1, 0, 1, 1, 2, 1, 2, 2, 3, 2, 3)},
