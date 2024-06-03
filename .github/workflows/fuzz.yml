@@ -1,7 +1,7 @@
 name: ci
 on:
   push:
-    branches: [main]
+    branches: [speedup]
   pull_request:
 
 jobs:
@@ -20,12 +20,12 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Set -fuzztime=10m for 'main' branch
-        if: github.ref == 'refs/heads/main'
+      - name: Set -fuzztime=10m for 'speedup' branch
+        if: github.ref == 'refs/heads/speedup'
         run: echo "fuzztime=10m" >> $GITHUB_ENV
 
-      - name: Set -fuzztime=1m for non-'main' branches
-        if: github.ref != 'refs/heads/main'
+      - name: Set -fuzztime=1m for non-'speedup' branches
+        if: github.ref != 'refs/heads/speedup'
         run: echo "fuzztime=1m" >> $GITHUB_ENV
 
       - name: Fuzz
