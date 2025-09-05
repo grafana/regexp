@@ -11,7 +11,7 @@ jobs:
         include:
           - fuzz: FuzzMatchString_FuzzingInputs
           - fuzz: FuzzMatchString_FuzzingRegexpsAndInputs
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-go@v5
         with:
