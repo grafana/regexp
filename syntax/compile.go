@@ -149,13 +149,20 @@ func (c *compiler) compile(re *Regexp) frag {
 		}
 		return f
 	case OpAlternate:
-		var f frag
-		for _, sub := range re.Sub {
-			f = c.alt(f, c.compile(sub))
-		}
-		return f
+		return c.alternates(re.Sub)
 	}
 	panic("regexp: unhandled case in compile")
+}
+
+// Emit a series of alternates as a balanced tree of choices.
+func (c *compiler) alternates(subs []*Regexp) frag {
+	if len(subs) == 0 {
+		return frag{}
+	} else if len(subs) == 1 {
+		return c.compile(subs[0])
+	}
+	mid := len(subs) / 2
+	return c.alt(c.alternates(subs[0:mid]), c.alternates(subs[mid:]))
 }
 
 func (c *compiler) inst(op InstOp) frag {
