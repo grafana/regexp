@@ -30,7 +30,7 @@ type job struct {
 
 const (
 	visitedBits        = 32
-	maxBacktrackProg   = 500        // len(prog.Inst) <= max
+	maxBacktrackProg   = 5000       // len(prog.Inst) <= max
 	maxBacktrackVector = 256 * 1024 // bit vector size <= max (bits)
 )
 
