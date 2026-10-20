@@ -7,6 +7,9 @@ All semantics are the same, and the optimised code passes all tests from upstrea
 
 The `main` branch is non-optimised: switch over to [`speedup`](https://github.com/grafana/regexp/tree/speedup) branch for the improved code.
 
+The regexp and syntax packages are synchronized with [Go 1.27.3](https://github.com/golang/go/tree/go1.27.3/src/regexp).
+Go 1.26 or later is required.
+
 ## Benchmarks:
 
 ![image](https://user-images.githubusercontent.com/8125524/152182951-856549ed-6044-4285-b799-69b31f598e32.png)
