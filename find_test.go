@@ -75,7 +75,7 @@ var findTests = []FindTest{
 	{`/$`, "/abc/", -1, build(1, 4, 5)},
 	{`/$`, "/abc", -1, nil},
 
-	// Lists of alternates, with prefix in common.
+	// lists of alternates, with prefix in common
 	{`xx|aa|a`, "aa", -1, build(1, 0, 2)},
 	{`xx|aa|(?i:a)`, "aa", -1, build(1, 0, 2)},
 	{`xx|a|aa`, "aa", -1, build(2, 0, 1, 1, 2)},
@@ -182,7 +182,7 @@ func TestFind(t *testing.T) {
 		result := re.Find([]byte(test.text))
 		switch {
 		case test.max == 0:
-			// The match result is unspecified when max is zero; skip.
+			// do not know whether to match or not; skip
 		case len(test.matches) == 0 && len(result) == 0:
 			// ok
 		case test.matches == nil && result != nil:
@@ -206,7 +206,7 @@ func TestFindString(t *testing.T) {
 		result := MustCompile(test.pat).FindString(test.text)
 		switch {
 		case test.max == 0:
-			// The match result is unspecified when max is zero; skip.
+			// do not know whether to match or not; skip
 		case len(test.matches) == 0 && len(result) == 0:
 			// ok
 		case test.matches == nil && result != "":
@@ -228,7 +228,7 @@ func TestFindString(t *testing.T) {
 func testFindIndex(test *FindTest, result []int, t *testing.T) {
 	switch {
 	case test.max == 0:
-		// The match result is unspecified when max is zero; skip.
+		// do not know whether to match or not; skip
 	case len(test.matches) == 0 && len(result) == 0:
 		// ok
 	case test.matches == nil && result != nil:
@@ -382,7 +382,7 @@ func TestFindSubmatch(t *testing.T) {
 		result := MustCompile(test.pat).FindSubmatch([]byte(test.text))
 		switch {
 		case test.max == 0:
-			// The match result is unspecified when max is zero; skip.
+			// do not know whether to match or not; skip
 		case test.matches == nil && result == nil:
 			// ok
 		case test.matches == nil && result != nil:
@@ -420,7 +420,7 @@ func TestFindStringSubmatch(t *testing.T) {
 		result := MustCompile(test.pat).FindStringSubmatch(test.text)
 		switch {
 		case test.max == 0:
-			// The match result is unspecified when max is zero; skip.
+			// do not know whether to match or not; skip
 		case test.matches == nil && result == nil:
 			// ok
 		case test.matches == nil && result != nil:
@@ -448,7 +448,7 @@ func testSubmatchIndices(test *FindTest, n int, want, result []int, t *testing.T
 func testFindSubmatchIndex(test *FindTest, result []int, t *testing.T) {
 	switch {
 	case test.max == 0:
-		// The match result is unspecified when max is zero; skip.
+		// do not know whether to match or not; skip
 	case test.matches == nil && result == nil:
 		// ok
 	case test.matches == nil && result != nil:
