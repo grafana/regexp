@@ -57,7 +57,7 @@
 // match text from an [io.RuneReader] may read arbitrarily far into the input
 // before returning.
 //
-// There are a few other methods that do not match this pattern.
+// (There are a few other methods that do not match this pattern.)
 package regexp
 
 import (

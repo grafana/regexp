@@ -1676,7 +1676,7 @@ func initAliases() {
 // The canonical name has a leading uppercase letter and then lowercase letters,
 // and it omits all underscores, spaces, and hyphens.
 // (We could have used all lowercase, but this way most package unicode
-// map keys are already canonical).
+// map keys are already canonical.)
 func canonicalName(name string) string {
 	var b []byte
 	first := true
@@ -1726,7 +1726,7 @@ func unicodeTable(name string) (tab, fold *unicode.RangeTable, sign int) {
 	case "Any":
 		return anyTable, anyTable, +1
 	case "Assigned":
-		return unicode.Cn, unicode.Cn, -1 // Invert Cn (unassigned).
+		return unicode.Cn, unicode.Cn, -1 // invert Cn (unassigned)
 	case "Ascii":
 		return asciiTable, asciiFoldTable, +1
 	case "Lc":
